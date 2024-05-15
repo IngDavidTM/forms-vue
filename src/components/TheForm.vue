@@ -109,14 +109,16 @@
     <div class="form-control">
       <rating-control v-model="rating"></rating-control>
     </div>
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: confirmTermsValidity === 'invalid' }">
       <input
         type="checkbox"
         id="confirm-terms"
         name="confirm-terms"
         v-model="confirm"
+        @blur="validateConfirmTerms"
       />
       <label for="confirm-terms">Agree to terms of use?</label>
+      <p v-if="confirmTermsValidity === 'invalid'">Please confirm the terms</p>
     </div>
     <div>
       <button>Save Data</button>
@@ -143,6 +145,7 @@ export default {
       userNameValidity: 'pending',
       userAgeValidity: 'pending',
       interestValidity: 'pending',
+      confirmTermsValidity: 'pending',
     };
   },
   methods: {
@@ -184,6 +187,13 @@ export default {
         this.interestValidity = 'invalid';
       } else {
         this.interestValidity = 'valid';
+      }
+    },
+    validateConfirmTerms() {
+      if (!this.confirm) {
+        this.confirmTermsValidity = 'invalid';
+      } else {
+        this.confirmTermsValidity = 'valid';
       }
     },
   },
