@@ -36,7 +36,7 @@
         <option value="newspaper">Newspaper</option>
       </select>
     </div>
-    <div class="form-control">
+    <div class="form-control" :class="{ invalid: interestValidity === 'invalid' }">
       <h2>What are you interested in?</h2>
       <div>
         <input
@@ -45,6 +45,7 @@
           type="checkbox"
           value="news"
           v-model="interest"
+          @blur="validateInterest"
         />
         <label for="interest-news">News</label>
       </div>
@@ -55,6 +56,7 @@
           type="checkbox"
           value="tutorials"
           v-model="interest"
+          @blur="validateInterest"
         />
         <label for="interest-tutorials">Tutorials</label>
       </div>
@@ -65,9 +67,11 @@
           type="checkbox"
           value="nothing"
           v-model="interest"
+          @blur="validateInterest"
         />
         <label for="interest-nothing">Nothing</label>
       </div>
+      <p v-if="interestValidity === 'invalid'">Please select at least one interest</p>
     </div>
     <div class="form-control">
       <h2>How do you learn?</h2>
@@ -138,6 +142,7 @@ export default {
       rating: null,
       userNameValidity: 'pending',
       userAgeValidity: 'pending',
+      interestValidity: 'pending',
     };
   },
   methods: {
@@ -172,6 +177,13 @@ export default {
         this.userAgeValidity = 'invalid';
       } else {
         this.userAgeValidity = 'valid';
+      }
+    },
+    validateInterest() {
+      if (this.interest.length === 0) {
+        this.interestValidity = 'invalid';
+      } else {
+        this.interestValidity = 'valid';
       }
     },
   },
