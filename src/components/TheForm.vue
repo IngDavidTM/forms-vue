@@ -1,6 +1,9 @@
 <template>
   <form @submit.prevent="submitForm">
-    <div class="form-control" :class="{invalid: userNameValidity === 'invalid'}">
+    <div
+      class="form-control"
+      :class="{ invalid: userNameValidity === 'invalid' }"
+    >
       <label for="user-name">Your Name</label>
       <input
         id="user-name"
@@ -59,20 +62,46 @@
     <div class="form-control">
       <h2>How do you learn?</h2>
       <div>
-        <input id="how-video" name="how" type="radio" value="video" v-model="how" />
+        <input
+          id="how-video"
+          name="how"
+          type="radio"
+          value="video"
+          v-model="how"
+        />
         <label for="how-video">Video Courses</label>
       </div>
       <div>
-        <input id="how-blogs" name="how" type="radio" value="blogs" v-model="how" />
+        <input
+          id="how-blogs"
+          name="how"
+          type="radio"
+          value="blogs"
+          v-model="how"
+        />
         <label for="how-blogs">Blogs</label>
       </div>
       <div>
-        <input id="how-other" name="how" type="radio" value="other" v-model="how" />
+        <input
+          id="how-other"
+          name="how"
+          type="radio"
+          value="other"
+          v-model="how"
+        />
         <label for="how-other">Other</label>
       </div>
     </div>
     <div class="form-control">
-      <input type="checkbox" id="confirm-terms" name="confirm-terms" v-model="confirm" />
+      <rating-control v-model="rating"></rating-control>
+    </div>
+    <div class="form-control">
+      <input
+        type="checkbox"
+        id="confirm-terms"
+        name="confirm-terms"
+        v-model="confirm"
+      />
       <label for="confirm-terms">Agree to terms of use?</label>
     </div>
     <div>
@@ -82,7 +111,12 @@
 </template>
 
 <script>
+import RatingControl from './RatingControl.vue';
+
 export default {
+  components: {
+    RatingControl,
+  },
   data() {
     return {
       userName: '',
@@ -91,6 +125,7 @@ export default {
       interest: [],
       how: null,
       confirm: false,
+      rating: null,
       userNameValidity: 'pending',
     };
   },
@@ -111,6 +146,8 @@ export default {
       this.how = null;
       console.log('Terms confirmed:' + this.confirm);
       this.confirm = false;
+      console.log('Rating:' + this.rating);
+      this.rating = null;
     },
     validateInput() {
       if (this.userName === '') {
@@ -118,7 +155,7 @@ export default {
       } else {
         this.userNameValidity = 'valid';
       }
-    }
+    },
   },
 };
 </script>
