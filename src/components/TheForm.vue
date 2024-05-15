@@ -10,13 +10,23 @@
         name="user-name"
         type="text"
         v-model.trim="userName"
-        @blur="validateInput"
+        @blur="validateInputName"
       />
       <p v-if="userNameValidity === 'invalid'">Please enter a valid name</p>
     </div>
-    <div class="form-control">
+    <div
+      class="form-control"
+      :class="{ invalid: userAgeValidity === 'invalid' }"
+    >
       <label for="age">Your Age (Years)</label>
-      <input id="age" name="age" type="number" v-model.number="userAge" />
+      <input
+        id="age"
+        name="age"
+        type="number"
+        v-model.number="userAge"
+        @blur="validateInputAge"
+      />
+      <p v-if="userAgeValidity === 'invalid'">Please enter a valid age</p>
     </div>
     <div class="form-control">
       <label for="referrer">How did you hear about us?</label>
@@ -127,6 +137,7 @@ export default {
       confirm: false,
       rating: null,
       userNameValidity: 'pending',
+      userAgeValidity: 'pending',
     };
   },
   methods: {
@@ -149,11 +160,18 @@ export default {
       console.log('Rating:' + this.rating);
       this.rating = null;
     },
-    validateInput() {
+    validateInputName() {
       if (this.userName === '') {
         this.userNameValidity = 'invalid';
       } else {
         this.userNameValidity = 'valid';
+      }
+    },
+    validateInputAge() {
+      if (this.userAge === null) {
+        this.userAgeValidity = 'invalid';
+      } else {
+        this.userAgeValidity = 'valid';
       }
     },
   },
